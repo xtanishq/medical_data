@@ -188,39 +188,59 @@ button {
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin: 0 0 10px;
+  margin: 0 0 14px;
 }
 .lookup-intro h1 {
-  max-width: 720px;
+  max-width: 650px;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(44px, 5.2vw, 76px);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  font-size: clamp(38px, 4.3vw, 62px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
   font-weight: 500;
   margin: 0;
 }
 .hero-brand-lockup {
-  width: 210px;
-  height: 176px;
+  width: 160px;
+  height: 160px;
   position: relative;
   overflow: hidden;
-  margin: -18px 0 10px;
+  margin: -18px 0 8px;
 }
 .hero-brand-lockup img {
   position: absolute;
-  width: 434px;
+  width: 500px;
   height: auto;
   max-width: none;
-  left: -112px;
-  top: -34px;
+  left: -171px;
+  top: -32px;
   mix-blend-mode: multiply;
+}
+.hero-brand-name {
+  margin: 0 0 24px;
+}
+.hero-brand-name strong,
+.hero-brand-name span {
+  display: block;
+  font-weight: 850;
+  line-height: 1.05;
+}
+.hero-brand-name strong {
+  color: #347f9b;
+  font-size: 22px;
+  letter-spacing: 0.025em;
+}
+.hero-brand-name span {
+  color: #659744;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  margin-top: 5px;
 }
 .intro-copy {
   max-width: 590px;
   color: var(--muted);
   font-size: clamp(16px, 1.5vw, 19px);
   line-height: 1.7;
-  margin: 28px 0 40px;
+  margin: 24px 0 40px;
 }
 .trust-list {
   display: grid;
@@ -1025,7 +1045,7 @@ label {
     gap: 44px;
   }
   .lookup-intro h1 {
-    font-size: 52px;
+    font-size: 46px;
   }
   .trust-list {
     grid-template-columns: 1fr;
@@ -1076,17 +1096,27 @@ label {
     padding: 35px 18px 48px;
   }
   .lookup-intro h1 {
-    font-size: 43px;
+    font-size: 36px;
+    line-height: 1.1;
   }
   .hero-brand-lockup {
-    width: 165px;
-    height: 138px;
+    width: 135px;
+    height: 135px;
     margin-top: -8px;
   }
   .hero-brand-lockup img {
-    width: 341px;
-    left: -88px;
+    width: 422px;
+    left: -144px;
     top: -27px;
+  }
+  .hero-brand-name {
+    margin-bottom: 20px;
+  }
+  .hero-brand-name strong {
+    font-size: 19px;
+  }
+  .hero-brand-name span {
+    font-size: 11px;
   }
   .intro-copy {
     margin: 21px 0 26px;
