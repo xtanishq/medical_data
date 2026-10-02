@@ -1,4 +1,4 @@
-# Careboard ICU
+# Team Rakshak Health Sector · ICU Monitoring
 
 Responsive ICU patient monitoring prototype built with NestJS and a dependency-free browser frontend.
 

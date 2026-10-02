@@ -307,12 +307,12 @@ function renderTrend() {
   gradient.append(
     svgElement('stop', {
       offset: '0%',
-      'stop-color': '#0b6e64',
+      'stop-color': '#347f9b',
       'stop-opacity': '.18',
     }),
     svgElement('stop', {
       offset: '100%',
-      'stop-color': '#0b6e64',
+      'stop-color': '#347f9b',
       'stop-opacity': '0',
     }),
   );
