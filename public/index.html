@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c6158" />
+    <meta
+      name="description"
+      content="Responsive ICU patient monitoring dashboard with QR and manual patient lookup."
+    />
+    <title>Careboard ICU</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Careboard ICU home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" role="img">
+            <path
+              d="M16 3a13 13 0 1 0 0 26 13 13 0 0 0 0-26Zm-2 7h4v4h4v4h-4v4h-4v-4h-4v-4h4v-4Z"
+            />
+          </svg>
+        </span>
+        <span><strong>Careboard</strong><small>ICU monitoring</small></span>
+      </a>
+
+      <div class="header-actions">
+        <span class="connection-status"
+          ><span aria-hidden="true"></span> Secure workspace</span
+        >
+        <button class="avatar-button" type="button" aria-label="Open user menu">
+          TK
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section
+        class="lookup-view"
+        id="lookup-view"
+        aria-labelledby="lookup-title"
+      >
+        <div class="lookup-intro">
+          <p class="eyebrow">Clinical overview</p>
+          <h1 id="lookup-title">
+            The right patient record, right when you need it.
+          </h1>
+          <p class="intro-copy">
+            Scan a bedside QR code or enter a Patient ID to view the latest
+            status, hourly observations, and care notes.
+          </p>
+
+          <div class="trust-list" aria-label="Product safeguards">
+            <div>
+              <span class="trust-icon">01</span>
+              <p>
+                <strong>Verify first</strong
+                ><small
+                  >Confirm patient and bed before opening the record.</small
+                >
+              </p>
+            </div>
+            <div>
+              <span class="trust-icon">02</span>
+              <p>
+                <strong>24-hour context</strong
+                ><small
+                  >Review every observation, trend, and action note.</small
+                >
+              </p>
+            </div>
+            <div>
+              <span class="trust-icon">03</span>
+              <p>
+                <strong>Access recorded</strong
+                ><small
+                  >Clinical record access is designed to be auditable.</small
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lookup-card">
+          <div class="lookup-card-header">
+            <span class="live-pill"><span></span> ICU workspace</span>
+            <h2>Find a patient</h2>
+            <p>Use the bedside QR code or enter the Patient ID.</p>
+          </div>
+
+          <div
+            class="lookup-tabs"
+            role="tablist"
+            aria-label="Patient lookup method"
+          >
+            <button
+              class="lookup-tab is-active"
+              id="manual-tab"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="manual-panel"
+            >
+              Patient ID
+            </button>
+            <button
+              class="lookup-tab"
+              id="scan-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="scan-panel"
+            >
+              Scan QR
+            </button>
+          </div>
+
+          <section
+            id="manual-panel"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="manual-tab"
+          >
+            <form id="lookup-form" novalidate>
+              <label for="patient-id">Patient ID</label>
+              <div class="field-wrap">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path
+                    d="M10.5 4a6.5 6.5 0 1 0 4.01 11.62L19.9 21 21 19.9l-5.38-5.39A6.5 6.5 0 0 0 10.5 4Zm0 2a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z"
+                  />
+                </svg>
+                <input
+                  id="patient-id"
+                  name="patientId"
+                  type="text"
+                  inputmode="text"
+                  maxlength="7"
+                  autocomplete="off"
+                  placeholder="e.g. GU70050"
+                  aria-describedby="id-hint lookup-error"
+                />
+              </div>
+              <p class="field-hint" id="id-hint">
+                Patient IDs use two letters followed by five digits.
+              </p>
+              <p
+                class="form-error"
+                id="lookup-error"
+                role="alert"
+                aria-live="polite"
+              ></p>
+              <button class="primary-button" id="find-button" type="submit">
+                <span>View patient record</span>
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <path
+                    d="m13.3 5.3 5.7 5.7H4v2h15l-5.7 5.7 1.4 1.4 8.1-8.1-8.1-8.1-1.4 1.4Z"
+                  />
+                </svg>
+              </button>
+            </form>
+
+            <div class="demo-records">
+              <span>Demo records</span>
+              <button type="button" data-demo-id="GU70050">
+                <i class="status-dot normal"></i> GU70050 · Stable
+              </button>
+              <button type="button" data-demo-id="GU70049">
+                <i class="status-dot critical"></i> GU70049 · Critical
+              </button>
+            </div>
+          </section>
+
+          <section
+            id="scan-panel"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="scan-tab"
+            hidden
+          >
+            <div class="scan-placeholder">
+              <span class="qr-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48">
+                  <path
+                    d="M5 5h16v16H5V5Zm4 4v8h8V9H9Zm18-4h16v16H27V5Zm4 4v8h8V9h-8ZM5 27h16v16H5V27Zm4 4v8h8v-8H9Zm18-4h7v4h-3v4h-4v-8Zm11 0h5v8h-4v-4h-1v-4Zm-11 12h4v4h-4v-4Zm7-4h4v4h5v4h-9v-8Z"
+                  />
+                </svg>
+              </span>
+              <h3>Scan bedside QR</h3>
+              <p>Allow camera access and keep the code inside the frame.</p>
+              <button class="secondary-button" id="open-scanner" type="button">
+                Open camera
+              </button>
+              <p class="camera-note">
+                Camera access works on localhost or an HTTPS connection.
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section
+        class="dashboard-view"
+        id="dashboard-view"
+        aria-labelledby="dashboard-title"
+        hidden
+      >
+        <aside class="sidebar" aria-label="Patient dashboard navigation">
+          <button class="back-button" id="back-button" type="button">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path
+                d="m10.7 5.3-1.4-1.4L1.2 12l8.1 8.1 1.4-1.4L5 13h18v-2H5l5.7-5.7Z"
+              />
+            </svg>
+            Find another patient
+          </button>
+          <nav>
+            <a class="is-active" href="#overview"><span>Overview</span></a>
+            <a href="#trends"><span>Trends</span></a>
+            <a href="#observations"><span>Observations</span></a>
+          </nav>
+          <div class="sidebar-note">
+            <strong>Clinical reminder</strong>
+            <p>
+              Confirm findings at bedside. This prototype does not replace
+              clinical judgement.
+            </p>
+          </div>
+        </aside>
+
+        <div class="dashboard-content">
+          <section class="patient-heading" id="overview">
+            <div>
+              <button
+                class="mobile-back"
+                id="mobile-back"
+                type="button"
+                aria-label="Find another patient"
+              >
+                ← All patients
+              </button>
+              <p class="eyebrow">Patient overview</p>
+              <div class="title-row">
+                <h1 id="dashboard-title">Patient record</h1>
+                <span class="status-badge" id="overall-status"></span>
+              </div>
+              <p class="patient-meta" id="patient-meta"></p>
+            </div>
+            <div class="updated-block">
+              <span>Last observation</span>
+              <strong id="last-updated"></strong>
+            </div>
+          </section>
+
+          <section class="alert-banner" id="alert-banner" aria-live="polite">
+            <span class="alert-symbol" aria-hidden="true">!</span>
+            <div>
+              <strong id="alert-title"></strong>
+              <p id="alert-message"></p>
+            </div>
+          </section>
+
+          <section aria-labelledby="snapshot-title">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Selected hour</p>
+                <h2 id="snapshot-title">Clinical snapshot</h2>
+              </div>
+              <span id="selected-hour-label"></span>
+            </div>
+            <div class="metric-grid" id="metric-grid"></div>
+          </section>
+
+          <section
+            class="trend-panel"
+            id="trends"
+            aria-labelledby="trend-title"
+          >
+            <div class="section-heading trend-heading">
+              <div>
+                <p class="eyebrow">24-hour movement</p>
+                <h2 id="trend-title">Heart Rate &amp; Rhythm</h2>
+              </div>
+              <label class="select-label" for="trend-select"
+                ><span>Metric</span
+                ><select id="trend-select"></select
+              ></label>
+            </div>
+            <div class="chart-summary">
+              <strong id="trend-current"></strong><span id="trend-range"></span>
+            </div>
+            <div
+              class="chart-wrap"
+              id="trend-chart"
+              role="img"
+              aria-label="24-hour observation trend"
+            ></div>
+            <div class="chart-axis" aria-hidden="true">
+              <span>00:00</span><span>06:00</span><span>12:00</span
+              ><span>18:00</span><span>23:00</span>
+            </div>
+          </section>
+
+          <section class="hour-section" aria-labelledby="timeline-title">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Observation timeline</p>
+                <h2 id="timeline-title">Choose an hour</h2>
+              </div>
+              <span>24 entries</span>
+            </div>
+            <div
+              class="hour-timeline"
+              id="hour-timeline"
+              aria-label="Hourly observations"
+            ></div>
+          </section>
+
+          <section id="observations" aria-labelledby="observations-title">
+            <div class="section-heading observation-heading">
+              <div>
+                <p class="eyebrow">All parameters</p>
+                <h2 id="observations-title">Hourly observations</h2>
+              </div>
+              <div
+                class="category-filter"
+                id="category-filter"
+                aria-label="Filter observations"
+              ></div>
+            </div>
+            <div class="observation-grid" id="observation-grid"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div
+      class="scanner-modal"
+      id="scanner-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="scanner-title"
+      hidden
+    >
+      <div class="scanner-dialog">
+        <div class="scanner-header">
+          <div>
+            <p class="eyebrow">Secure lookup</p>
+            <h2 id="scanner-title">Scan patient QR</h2>
+          </div>
+          <button id="close-scanner" type="button" aria-label="Close scanner">
+            ×
+          </button>
+        </div>
+        <div class="video-frame">
+          <video id="scanner-video" autoplay muted playsinline></video
+          ><span class="scan-guide" aria-hidden="true"></span>
+        </div>
+        <p class="scanner-message" id="scanner-message" aria-live="polite">
+          Starting camera…
+        </p>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
