@@ -589,6 +589,50 @@ label {
   min-width: 0;
   margin: 0 auto;
 }
+.patient-photo {
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 30%;
+  border: 3px solid var(--border, #dce7e4);
+}
+
+.hour-notes {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #dce7e4;
+  border-radius: 16px;
+  background: #fff;
+}
+.hour-notes h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+.hour-notes p {
+  margin: 0;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  .patient-photo {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+.status-badge.status-average {
+  background: #fff3d6;
+  color: #805b12;
+}
+
+.status-text-average {
+  color: #805b12;
+}
+.hour-button.average {
+  border-color: #d3ab53;
+}
+
 .patient-heading {
   display: flex;
   justify-content: space-between;

@@ -5,6 +5,7 @@ import {
   Observation,
   PatientRecord,
 } from './icu.types';
+import { IMPORTED_PATIENTS } from './icu.imported';
 
 type ParameterDefinition = {
   id: string;
@@ -434,7 +435,7 @@ function createCriticalHour(index: number): HourlyRecord {
   };
 }
 
-export const ICU_PATIENTS: PatientRecord[] = [
+const LEGACY_PATIENTS: PatientRecord[] = [
   {
     patientId: 'GU70050',
     displayName: 'Gaurav Kumar',
@@ -450,6 +451,7 @@ export const ICU_PATIENTS: PatientRecord[] = [
   {
     patientId: 'GU70049',
     displayName: 'Shachi',
+    photoUrl: '/patients/sachi.jpeg',
     bed: '204',
     unit: 'Critical Care ICU',
     recordDate: '2026-09-30',
@@ -459,4 +461,14 @@ export const ICU_PATIENTS: PatientRecord[] = [
       createCriticalHour(index),
     ),
   },
+];
+
+export const ICU_PATIENTS: PatientRecord[] = [
+  ...IMPORTED_PATIENTS,
+  ...LEGACY_PATIENTS.filter(
+    (patient) =>
+      !IMPORTED_PATIENTS.some(
+        (imported) => imported.patientId === patient.patientId,
+      ),
+  ),
 ];

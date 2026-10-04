@@ -181,14 +181,8 @@
               </button>
             </form>
 
-            <div class="demo-records">
-              <span>Demo records</span>
-              <button type="button" data-demo-id="GU70050">
-                <i class="status-dot normal"></i> GU70050 · Stable
-              </button>
-              <button type="button" data-demo-id="GU70049">
-                <i class="status-dot critical"></i> GU70049 · Critical
-              </button>
+            <div class="demo-records" id="patient-directory">
+              <span>Patient records</span>
             </div>
           </section>
 
@@ -262,6 +256,7 @@
               </button>
               <p class="eyebrow">Patient overview</p>
               <div class="title-row">
+                <img id="patient-photo" class="patient-photo" alt="" hidden />
                 <h1 id="dashboard-title">Patient record</h1>
                 <span class="status-badge" id="overall-status"></span>
               </div>
@@ -350,6 +345,10 @@
               ></div>
             </div>
             <div class="observation-grid" id="observation-grid"></div>
+            <div class="hour-notes">
+              <h3>Action / Notes</h3>
+              <p id="hour-action-notes"></p>
+            </div>
           </section>
         </div>
       </section>

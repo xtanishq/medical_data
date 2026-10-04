@@ -26,6 +26,20 @@ describe('IcuService', () => {
     ).toBe('GU70050');
   });
 
+  it('keeps the main-sheet Jatin ID separate from the copied import-tab ID', () => {
+    const jatin = service.findPatient('GU70212');
+    const gaurav = service.findPatient('GU70050');
+    expect(jatin.displayName).toBe('Jatin');
+    expect(jatin.overallStatus).toBe('Average');
+    expect(jatin.hourlyRecords[0].observations[0].observedValue).toBe(
+      '92 bpm; Sinus rhythm',
+    );
+    expect(gaurav.hourlyRecords[0].observations[0].observedValue).toBe(
+      '71 bpm; Normal sinus rhythm',
+    );
+    expect(jatin.photoUrl).toBe('/patients/jatin.jpeg');
+  });
+
   it('rejects malformed and unknown identifiers', () => {
     expect(() => service.resolvePatient('invalid')).toThrow(
       BadRequestException,

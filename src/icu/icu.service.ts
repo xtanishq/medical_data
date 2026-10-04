@@ -8,6 +8,17 @@ import { PatientRecord } from './icu.types';
 
 @Injectable()
 export class IcuService {
+  listPatients() {
+    return ICU_PATIENTS.map(
+      ({ patientId, displayName, overallStatus, photoUrl }) => ({
+        patientId,
+        displayName,
+        overallStatus,
+        photoUrl: photoUrl ?? null,
+      }),
+    );
+  }
+
   resolvePatient(input: string): PatientRecord {
     const patientId = this.extractPatientId(input);
     const patient = ICU_PATIENTS.find((item) => item.patientId === patientId);

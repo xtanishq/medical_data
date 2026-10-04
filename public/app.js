@@ -91,6 +91,11 @@ function showLookup() {
 function renderDashboard() {
   const patient = state.patient;
   document.querySelector('#dashboard-title').textContent = patient.displayName;
+  const photo = document.querySelector('#patient-photo');
+  photo.hidden = !patient.photoUrl;
+  photo.alt = `${patient.displayName} profile photo`;
+  if (patient.photoUrl) photo.src = patient.photoUrl;
+  else photo.removeAttribute('src');
   document.querySelector('#patient-meta').textContent =
     `${patient.patientId} · Bed ${patient.bed} · ${patient.unit} · ${formatDate(patient.recordDate)}`;
   document.querySelector('#last-updated').textContent = formatDateTime(
@@ -104,12 +109,15 @@ function renderDashboard() {
   const isCritical = patient.overallStatus === 'Critical';
   const banner = document.querySelector('#alert-banner');
   banner.className = `alert-banner ${isCritical ? 'critical' : 'normal'}`;
+  const isNormal = patient.overallStatus === 'Normal';
   document.querySelector('#alert-title').textContent = isCritical
     ? 'Critical observations require attention'
-    : 'Patient is within recorded targets';
+    : isNormal
+      ? 'Recorded status: Normal'
+      : `Recorded status: ${patient.overallStatus}`;
   document.querySelector('#alert-message').textContent = isCritical
     ? 'Review the latest abnormal observations and escalation note below.'
-    : 'No critical observations are recorded in the selected 24-hour period.';
+    : 'See the hourly observations and notes for the recorded findings.';
 
   renderTimeline();
   renderCategoryFilters();
@@ -120,6 +128,8 @@ function renderDashboard() {
 
 function renderHour() {
   const record = state.patient.hourlyRecords[state.selectedHourIndex];
+  document.querySelector('#hour-action-notes').textContent =
+    record.actionNotes || 'No notes recorded.';
   document.querySelector('#selected-hour-label').textContent =
     `${record.hour} · ${record.overallStatus}`;
   renderMetricCards(record);
@@ -268,9 +278,13 @@ function renderTrend() {
   if (!values.length) return;
 
   const latest = items[state.selectedHourIndex];
-  document.querySelector('#trend-title').textContent = latest.label;
-  document.querySelector('#trend-current').textContent =
-    latest.observedValue.split(';')[0];
+  const isMap = latest.parameterId === 'blood-pressure';
+  document.querySelector('#trend-title').textContent = isMap
+    ? 'Mean Arterial Pressure (MAP)'
+    : latest.label;
+  document.querySelector('#trend-current').textContent = isMap
+    ? `${latest.numericValue} mmHg`
+    : latest.observedValue.split(';')[0];
   document.querySelector('#trend-range').textContent =
     `Recorded range ${Math.min(...values)}–${Math.max(...values)}${latest.unit ? ` ${latest.unit}` : ''}`;
 
@@ -480,12 +494,27 @@ document.querySelector('#trend-select').addEventListener('change', (event) => {
   renderTrend();
   renderMetricCards(state.patient.hourlyRecords[state.selectedHourIndex]);
 });
-document.querySelectorAll('[data-demo-id]').forEach((button) =>
-  button.addEventListener('click', () => {
-    elements.input.value = button.dataset.demoId;
-    resolvePatient(button.dataset.demoId);
-  }),
-);
+async function loadPatientDirectory() {
+  try {
+    const response = await fetch('/api/patients');
+    if (!response.ok) return;
+    const patients = await response.json();
+    const directory = document.querySelector('#patient-directory');
+    patients.forEach((patient) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = `${patient.displayName} · ${patient.patientId} · ${patient.overallStatus}`;
+      button.addEventListener('click', () => {
+        elements.input.value = patient.patientId;
+        resolvePatient(patient.patientId);
+      });
+      directory.append(button);
+    });
+  } catch {
+    /* Manual patient lookup remains available. */
+  }
+}
+loadPatientDirectory();
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && !elements.scannerModal.hidden) closeScanner();
 });

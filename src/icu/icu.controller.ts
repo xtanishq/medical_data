@@ -7,6 +7,11 @@ import type { PatientRecord } from './icu.types';
 export class IcuController {
   constructor(private readonly icuService: IcuService) {}
 
+  @Get()
+  list() {
+    return this.icuService.listPatients();
+  }
+
   @Post('resolve')
   @HttpCode(200)
   resolve(@Body() dto: ResolvePatientDto): PatientRecord {

@@ -1,4 +1,5 @@
-export type ClinicalStatus = 'Normal' | 'Review' | 'Critical' | 'Not Assessed';
+export type ClinicalStatus =
+  'Normal' | 'Average' | 'Review' | 'Critical' | 'Not Assessed';
 
 export type ClinicalCategory =
   | 'Cardiovascular'
@@ -27,6 +28,7 @@ export type HourlyRecord = {
 };
 
 export type PatientRecord = {
+  photoUrl?: string | null;
   patientId: string;
   displayName: string;
   bed: string;
